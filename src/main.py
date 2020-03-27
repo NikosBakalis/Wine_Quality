@@ -1,15 +1,13 @@
-import csv
+from sklearn.metrics import f1_score
+from Linker import linker
 
 
-def print_csv(csv_path):
-    """
-    This function takes as argument the path of a csv file and then it prints the csv file
-    """
-    with open(csv_path) as csv_path:
-        reader = csv.reader(csv_path)
-        for row in reader:
-            print("\t | ".join(row))
+# print_csv("C:\\Users\\Nikolas\\PycharmProjects\\Support_Vector_Machines\\Input\\winequality-red.csv")
+# new_list = csv_to_1d_list("C:\\Users\\Nikolas\\PycharmProjects\\Support_Vector_Machines\\Input\\winequality-red.csv")
+e = linker.csv_column_to_list("C:\\Users\\Nikolas\\PycharmProjects\\Support_Vector_Machines\\Input\\winequality-red.csv", 2)
+print(e)
 
-
-print_csv("C:\\Users\\Nikolas\\PycharmProjects\\Support_Vector_Machines\\Input\\winequality-red.csv")
+y_true = [0, 1, 2, 0, 1, 2]
+y_pred = [0, 1, 2, 0, 1, 2]
+print(f1_score(e, e, average='macro'))
 
