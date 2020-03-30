@@ -36,9 +36,9 @@ for row in reader:
 # print(svm_data)
 # print(wanted.__len__())
 # print(final.__len__())
-print(float(f1_score(wanted, final, average='micro')) * 100)
-print(float(precision_score(wanted, final, average='micro')) * 100)
-print(float(recall_score(wanted, final, average='micro')) * 100)
+print(float(f1_score(wanted, final, average='micro')))
+print(float(precision_score(wanted, final, average='micro')))
+print(float(recall_score(wanted, final, average='micro')))
 
 linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
 linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-to-be-tested.csv")
