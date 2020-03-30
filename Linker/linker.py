@@ -1,6 +1,8 @@
 from itertools import chain
 import csv
 
+import pandas
+
 
 def print_csv(csv_path):
     """
@@ -54,3 +56,24 @@ def csv_column_to_list(csv_path, column_number):
             my_list.append(row[column_number])
             # print(f'\t{row[column_number]}')
     return my_list
+
+
+def csv_spliter(csv_path, percentage, csv_first_path, csv_second_path):
+    all_data = csv_to_list(csv_path)
+    all_data_length = all_data.__len__()
+    all_data_starting_length_to_test = all_data_length * percentage / 100
+    all_data_to_test = []
+    for i in range(0, int(all_data_starting_length_to_test)):
+        all_data_to_test.append(all_data[i])
+
+    pandas.DataFrame(all_data_to_test).to_csv(csv_first_path, header=None, index=None)
+
+    all_data_to_be_tested = []
+    for i in range(int(all_data_starting_length_to_test), all_data.__len__()):
+        all_data_to_be_tested.append(all_data[i])
+    pandas.DataFrame(all_data_to_be_tested).to_csv(csv_second_path, header=None, index=None)
+
+
+def csv_clear(csv_path):
+    f = open(csv_path, "w+")
+    f.close()

@@ -17,30 +17,7 @@ seaborn.set(font_scale=1.2)
 # %matplotlib inline
 
 data = pandas.read_csv("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
-if data.empty:
-    all_data = linker.csv_to_list("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red.csv")
-    print(all_data)
-    # all_data.pop(0)
-    # print(all_data)
-    # all_data = [float(j) for j in all_data]
-    # print(all_data)
-    all_data_length = all_data.__len__()
-    all_data_starting_length_to_test = all_data_length * 75 / 100
-    print(int(all_data_starting_length_to_test))
-    all_data_to_test = []
-    for i in range(0, int(all_data_starting_length_to_test)):
-        all_data_to_test.append(all_data[i])
-    print(all_data_to_test)
-    print(all_data_to_test.__len__())
-
-    pandas.DataFrame(all_data_to_test).to_csv(
-        "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv", header=None, index=None)
-
-    data = pandas.read_csv("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
-    data.head()
-else:
-    print("FFFFFFFFFFFFFFFFFFF")
-    data.head()
+data.head()
 
 seaborn.lmplot("fixed acidity", "volatile acidity", data=data, hue="quality", palette="Set1", fit_reg=False,
                scatter_kws={"s": 70})
@@ -91,5 +68,5 @@ plt.show()
 
 def determine(fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide,
               total_sulfur_dioxide, density, pH, sulphates, alcohol):
-    print(model.predict([[fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides,
-                          free_sulfur_dioxide, total_sulfur_dioxide, density, pH, sulphates, alcohol]]))
+    return model.predict([[fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides,
+                          free_sulfur_dioxide, total_sulfur_dioxide, density, pH, sulphates, alcohol]])
