@@ -30,7 +30,7 @@ acidities = data[
      "total sulfur dioxide", "density", "pH", "sulphates", "alcohol"]].to_numpy()
 type_label = numpy.where(data["quality"] == 1, data["quality"] - 1, data["quality"])
 # numpy.set_printoptions(threshold=sys.maxsize)
-print(type_label)
+# print(type_label)
 
 # Fit the SVM model.
 model = svm.SVC(kernel="linear", decision_function_shape="ovr")
