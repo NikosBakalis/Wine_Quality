@@ -22,6 +22,7 @@ data.head()
 seaborn.lmplot("fixed acidity", "volatile acidity", data=data, hue="quality", palette="Set1", fit_reg=False,
                scatter_kws={"s": 70})
 plt.show()
+print("I am learning...")
 
 # Specify inputs for the model.
 # acidities = data[["fixed acidity", "volatile acidity"]].to_numpy()
@@ -48,6 +49,7 @@ yy_down = a * xx + (b[1] - a * b[0])
 b = model.support_vectors_[-1]
 yy_up = a * xx + (b[1] - a * b[0])
 
+print("Now I know!!!")
 # Look the margins and support vectors
 seaborn.lmplot("fixed acidity", "volatile acidity", data=data, hue="quality", palette="Set1", fit_reg=False,
                scatter_kws={"s": 70})
