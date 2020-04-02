@@ -34,6 +34,14 @@ def csv_to_list(csv_path):
         return data
 
 
+def list_to_csv(list_name, csv_path):
+    """
+    This function takes as argument the name of a list and the path of a csv file and then it transforms it to a csv.
+    """
+    df = pandas.DataFrame(list_name)
+    df.to_csv(csv_path, header=False, index=False)
+
+
 def csv_to_1d_list(csv_path):
     """
     This function takes as argument the path of a csv file and then it transforms it to an 1-D list.
@@ -59,6 +67,9 @@ def csv_column_to_list(csv_path, column_number):
 
 
 def csv_spliter(csv_path, percentage, csv_first_path, csv_second_path):
+    """
+    This function takes as argument the path of a csv file, the percentage we want to split, the target file number 1 and the target file number 2 and then it splits the csv int two different csv's.
+    """
     all_data = csv_to_list(csv_path)
     all_data_length = all_data.__len__()
     all_data_starting_length_to_test = all_data_length * percentage / 100
@@ -72,6 +83,20 @@ def csv_spliter(csv_path, percentage, csv_first_path, csv_second_path):
     for i in range(int(all_data_starting_length_to_test), all_data.__len__()):
         all_data_to_be_tested.append(all_data[i])
     pandas.DataFrame(all_data_to_be_tested).to_csv(csv_second_path, header=None, index=None)
+
+
+def csv_delete_column(csv_path, csv_column, csv_target_path):
+    """
+    This function takes as argument the path of a csv file and the number of a specific column and then it deletes this column.
+    """
+    my_list = csv_to_list(csv_path)
+    for i in my_list:
+        del i[csv_column]
+    list_to_csv(my_list, csv_target_path)
+
+
+def csv_add_column():
+    print("csv_add_column")
 
 
 def csv_clear(csv_path):
