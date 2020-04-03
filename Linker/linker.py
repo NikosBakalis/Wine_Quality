@@ -95,10 +95,36 @@ def csv_delete_column(csv_path, csv_column, csv_target_path):
     list_to_csv(my_list, csv_target_path)
 
 
-def csv_add_column():
+def csv_add_column(csv_path, csv_column, to_add, csv_target_path):
+    """
+    This function takes as argument the path of a csv file and the number of a specific column and then it adds this column.
+    """
     print("csv_add_column")
+    my_list = csv_to_list(csv_path)
+    for i in my_list:
+        i.insert(csv_column, to_add)
+    list_to_csv(my_list, csv_target_path)
 
 
 def csv_clear(csv_path):
+    """
+    This function takes as argument the path of a csv file and then it clears the entire csv.
+    """
     f = open(csv_path, "w+")
     f.close()
+
+
+def list_average(list_name):
+    """
+    This function takes as argument the name of a list and then it returns the average of the list.
+    """
+    return sum(list_name) / len(list_name)
+
+
+def list_string_to_float(list_name):
+    """
+    This function takes as argument the name of a string list and then it returns the same list as float list.
+    """
+    for i in range(0, len(list_name)):
+        list_name[i] = float(list_name[i])
+    return list_name
