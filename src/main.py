@@ -11,8 +11,6 @@ from sklearn.metrics import f1_score, precision_score, recall_score
 from sklearn import preprocessing, utils
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn import linear_model
-from sklearn import svm
 import csv
 
 question = ""
