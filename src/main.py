@@ -1,4 +1,6 @@
 # Basic library for all my methods
+import sys
+
 import numpy
 import pandas
 
@@ -8,6 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, precision_score, recall_score
 from sklearn import preprocessing, utils
 from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn import linear_model
 from sklearn import svm
 import csv
@@ -89,60 +92,67 @@ while question != "Leave":
                     average_number, "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-add.csv")
             elif choice == "Logistic Regression":
                 print("Logistic Regression")
-                X_test = linker.csv_column_to_list(
-                    "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv", 8)
-                X_test.pop(0)
-                linker.list_string_to_float(X_test)
-                linker.csv_delete_column(
-                    "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv", 8,
-                    "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
-                X_train = linker.csv_to_list(
-                    "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
-                X_train.pop(0)
-                for row in X_train:
-                    linker.list_string_to_float(row)
-                y_train = linker.csv_to_list(
-                    "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-delete.csv")
-                for row in y_train:
-                    linker.list_string_to_float(row)
-                X_train = numpy.array(X_train)
+                # X_test = linker.csv_column_to_list(
+                #     "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv", 8)
+                # X_test.pop(0)
+                # linker.list_string_to_float(X_test)
+                # linker.csv_delete_column(
+                #     "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv", 8,
+                #     "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
+                # X_train = linker.csv_to_list(
+                #     "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
+                # X_train.pop(0)
+                # for row in X_train:
+                #     linker.list_string_to_float(row)
+                # y_train = linker.csv_to_list(
+                #     "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-delete.csv")
+                # for row in y_train:
+                #     linker.list_string_to_float(row)
+                # numpy.set_printoptions(threshold=sys.maxsize, suppress=True)
+
+                df = pandas.read_csv("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red.csv")
+                X_train, X_test, y_train, y_test = train_test_split(df[["fixed acidity", "volatile acidity",
+                                                                        "citric acid", "residual sugar", "chlorides",
+                                                                        "free sulfur dioxide", "total sulfur dioxide",
+                                                                        "density", "sulphates", "alcohol", "quality"]],
+                                                                    df.pH, test_size=0.33)
                 print(X_train)
-                print(X_train.__len__())
-                X_test = numpy.array(X_test)
                 print(X_test)
-                print(X_test.__len__())
-                y_train = numpy.array(y_train)
                 print(y_train)
-                print(y_train.__len__())
+                print(y_test)
                 lab_enc = preprocessing.LabelEncoder()
-                training_scores_encoded = lab_enc.fit_transform(y_train)
-                print(training_scores_encoded)
-                model = LogisticRegression()
-                model.fit(X_train, training_scores_encoded)
-                # model.predict(X_test)
+                y_train_encoded = lab_enc.fit_transform(y_train)
+                # print(len(y_train_encoded))
+                # print(len(y_test))
+                model = LogisticRegression(max_iter=10000)
+                model.fit(X_train, y_train_encoded)
+                print(len(model.predict(X_test)))
+                # print(f1_score(model.predict(X_test), y_test, average='macro'))
+                # training_scores_decoded = lab_enc.fit_transform(model.predict(y_train))
+                # print(training_scores_decoded)
 
             elif choice == "K-means":
                 print("K-means")
-                training_data_X = numpy.array([[1.2, 6.7, 2.7], [2.3, 4.6, 2.2], [0.3, 3.9, 0.8], [2.1, 1.3, 4.3]])
-                print(training_data_X)
-                print(training_data_X.__len__())
-                training_scores_Y = numpy.array([1.4, 9.2, 2.5, 2.2])
-                print(training_scores_Y)
-                print(training_scores_Y.__len__())
-                prediction_data_test = numpy.array([[1.5, 3.4, 2.2], [7.6, 7.2, 0.2]])
-                print(prediction_data_test)
-                print(prediction_data_test.__len__())
-                # clf = LogisticRegression()
-                # clf.fit(training_data_X, training_scores_Y)
+                df = pandas.read_csv("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red.csv")
+                X_train, X_test, y_train, y_test = train_test_split(df[["fixed acidity", "volatile acidity",
+                                                                        "citric acid", "residual sugar", "chlorides",
+                                                                        "free sulfur dioxide", "total sulfur dioxide",
+                                                                        "density", "sulphates", "alcohol", "quality"]],
+                                                                    df.pH, test_size=0.33)
+                print(X_train)
+                print(X_test)
+                print(y_train)
+                print(y_test)
                 lab_enc = preprocessing.LabelEncoder()
-                training_scores_encoded = lab_enc.fit_transform(training_scores_Y)
-                print(training_scores_encoded)
-                clf = LogisticRegression()
-                clf.fit(training_data_X, training_scores_encoded)
-                # print(clf.predict(prediction_data_test))
-                # re = clf.predict(prediction_data_test)
-                # re = lab_enc.fit(re)
-                # print(re)
+                y_train_encoded = lab_enc.fit_transform(y_train)
+                # print(len(y_train_encoded))
+                # print(len(y_test))
+                model = KNeighborsClassifier()
+                model.fit(X_train, y_train_encoded)
+                print(len(model.predict(X_test)))
+                # print(f1_score(model.predict(X_test), y_test, average='macro'))
+                # training_scores_decoded = lab_enc.fit_transform(model.predict(y_train))
+                # print(training_scores_decoded)
 
         linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-delete.csv")
         linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
