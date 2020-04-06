@@ -10,7 +10,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, precision_score, recall_score
 from sklearn import preprocessing, utils
 from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.cluster import KMeans
+# from mpl_toolkits import Axes3D
+from sklearn.preprocessing import scale
+
 import csv
 
 question = ""
@@ -118,39 +121,24 @@ while question != "Leave":
                 print(X_test)
                 print(y_train)
                 print(y_test)
-                lab_enc = preprocessing.LabelEncoder()
-                y_train_encoded = lab_enc.fit_transform(y_train)
+                # lab_enc = preprocessing.LabelEncoder()
+                # y_train_encoded = lab_enc.fit_transform(y_train)
+                y_train_encoded = [x * 100 for x in y_train]
                 # print(len(y_train_encoded))
                 # print(len(y_test))
                 model = LogisticRegression(max_iter=10000)
                 model.fit(X_train, y_train_encoded)
-                print(len(model.predict(X_test)))
+                # print(model.predict(X_test))
+                X_test_decoded = [x / 100 for x in model.predict(X_test)]
+                print(X_test_decoded)
                 # print(f1_score(model.predict(X_test), y_test, average='macro'))
                 # training_scores_decoded = lab_enc.fit_transform(model.predict(y_train))
                 # print(training_scores_decoded)
 
             elif choice == "K-means":
                 print("K-means")
-                df = pandas.read_csv("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red.csv")
-                X_train, X_test, y_train, y_test = train_test_split(df[["fixed acidity", "volatile acidity",
-                                                                        "citric acid", "residual sugar", "chlorides",
-                                                                        "free sulfur dioxide", "total sulfur dioxide",
-                                                                        "density", "sulphates", "alcohol", "quality"]],
-                                                                    df.pH, test_size=0.33)
-                print(X_train)
-                print(X_test)
-                print(y_train)
-                print(y_test)
-                lab_enc = preprocessing.LabelEncoder()
-                y_train_encoded = lab_enc.fit_transform(y_train)
-                # print(len(y_train_encoded))
-                # print(len(y_test))
-                model = KNeighborsClassifier()
-                model.fit(X_train, y_train_encoded)
-                print(len(model.predict(X_test)))
-                # print(f1_score(model.predict(X_test), y_test, average='macro'))
-                # training_scores_decoded = lab_enc.fit_transform(model.predict(y_train))
-                # print(training_scores_decoded)
+                print(linker.csv_column_to_list("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red.csv", 8))
+
 
         linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-delete.csv")
         linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
