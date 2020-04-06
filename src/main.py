@@ -137,8 +137,19 @@ while question != "Leave":
 
             elif choice == "K-means":
                 print("K-means")
-                print(linker.csv_column_to_list("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red.csv", 8))
-
+                # numpy.set_printoptions(threshold=sys.maxsize, suppress=True)
+                df = pandas.read_csv("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red.csv")
+                X_train, X_test, y_train, y_test = train_test_split(df[["fixed acidity", "volatile acidity",
+                                                                        "citric acid", "residual sugar", "chlorides",
+                                                                        "free sulfur dioxide", "total sulfur dioxide",
+                                                                        "density", "sulphates", "alcohol", "quality"]],
+                                                                    df.pH, test_size=0.33)
+                df.head()
+                kmeans = KMeans(n_clusters=3)
+                given = kmeans.fit_predict(X_train, y_train)
+                print(len(given))
+                wanted = kmeans.predict(X_test)
+                print(len(wanted))
 
         linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-delete.csv")
         linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
