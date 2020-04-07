@@ -137,19 +137,23 @@ while question != "Leave":
 
             elif choice == "K-means":
                 print("K-means")
-                # numpy.set_printoptions(threshold=sys.maxsize, suppress=True)
+                numpy.set_printoptions(threshold=sys.maxsize, suppress=True)
                 df = pandas.read_csv("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red.csv")
                 X_train, X_test, y_train, y_test = train_test_split(df[["fixed acidity", "volatile acidity",
                                                                         "citric acid", "residual sugar", "chlorides",
                                                                         "free sulfur dioxide", "total sulfur dioxide",
-                                                                        "density", "sulphates", "alcohol", "quality"]],
-                                                                    df.pH, test_size=0.33)
+                                                                        "density", "pH", "sulphates", "alcohol",
+                                                                        "quality"]], df.pH, test_size=0.33)
                 df.head()
-                kmeans = KMeans(n_clusters=3)
-                given = kmeans.fit_predict(X_train, y_train)
-                print(len(given))
-                wanted = kmeans.predict(X_test)
-                print(len(wanted))
+                model = KMeans(n_clusters=3)
+                given = model.fit_predict(X_train, y_train)
+                for k in (range(3)):
+                    print(model.cluster_centers_[k][8])
+                # print(numpy.array(given))
+                wanted = model.predict(X_test)
+                print(numpy.array(wanted))
+                print(numpy.array(y_test))
+                print(float(f1_score(numpy.array(wanted), numpy.array(y_test), average='micro')))
 
         linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-delete.csv")
         linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
