@@ -160,13 +160,3 @@ while question != "Leave":
         linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-to-be-tested.csv")
         linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-add.csv")
 
-    elif question == "C":
-        df = pandas.read_csv("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red.csv")
-        X_train, X_test, y_train, y_test = train_test_split(df[["fixed acidity", "volatile acidity", "citric acid",
-                                                                "residual sugar", "chlorides", "free sulfur dioxide",
-                                                                "total sulfur dioxide", "density", "pH", "sulphates",
-                                                                "alcohol"]], df.quality, test_size=0.25)
-        print(X_train)
-        print(X_test)
-        print(y_train)
-        print(y_test)
