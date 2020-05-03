@@ -1,18 +1,12 @@
-# Basic library for all my methods
 import sys
-
 import numpy
 import pandas
-
+from sklearn.svm import SVC
 from Linker import linker
-
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, precision_score, recall_score
-from sklearn import preprocessing, utils
 from sklearn.linear_model import LogisticRegression
 from sklearn.cluster import KMeans
-# from mpl_toolkits import Axes3D
-from sklearn.preprocessing import scale
 
 import csv
 
@@ -23,47 +17,26 @@ while question != "Leave":
 
     if question == "A":
         print("This is A")
-        linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
-        linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-to-be-tested.csv")
+        df = pandas.read_csv("../Input/winequality-red.csv")
+        X_train, X_test, y_train, y_test = train_test_split(df[["fixed acidity", "volatile acidity", "citric acid",
+                                                                "residual sugar", "chlorides", "free sulfur dioxide",
+                                                                "total sulfur dioxide", "density", "sulphates",
+                                                                "alcohol", "quality"]], df.pH, test_size=0.25)
 
-        data = linker.csv_column_to_list(
-            "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red.csv", 11)
-        data.pop(0)
-        data = [int(i) for i in data]
+        # print(X_train, X_test, y_train, y_test)
+        y_train_encoded = [round(x * 100) for x in y_train]
+        # print(y_train, "\n", y_train_encoded)
+        given = [round(x * 100) for x in y_test]
+        # print(y_test, "\n", given)
 
-        data_length = data.__len__()
-        data_starting_length_to_test = data_length * 75 / 100
-        data_to_test = []
-        for i in range(int(data_starting_length_to_test), data.__len__()):
-            data_to_test.append(data[i])
+        clf = SVC(gamma='auto')
+        clf.fit(X_train, y_train_encoded)
+        final = clf.predict(X_test)
+        # print(final)
 
-        linker.csv_spliter("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red.csv", 75,
-                           "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv",
-                           "C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-to-be-tested.csv")
-
-        file = open("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-to-be-tested.csv")
-        reader = csv.reader(file, delimiter=',')
-
-        from Linker import SVM_Analyzer
-
-        final = []
-        wanted = []
-        for row in reader:
-            item = SVM_Analyzer.determine(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8],
-                                          row[9], row[10])
-            wanted.append(int(row[11]))
-            final.append(item[0])
-
-        # svm_data = SVM_Analyzer.type_label.tolist()
-        # print(svm_data)
-        # print(wanted.__len__())
-        # print(final.__len__())
-        print(float(f1_score(wanted, final, average='micro')))
-        print(float(precision_score(wanted, final, average='micro')))
-        print(float(recall_score(wanted, final, average='micro')))
-
-        linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-test.csv")
-        linker.csv_clear("C:\\Users\\Nikolas\\PycharmProjects\\Wine_Quality\\Input\\winequality-red-to-be-tested.csv")
+        print("\nf1 Score", float(f1_score(given, final, average='micro')))
+        print("Precision Score", float(precision_score(given, final, average='micro')))
+        print("Recall Score", float(recall_score(given, final, average='micro')), "\n\n")
 
     elif question == "B":
         print("This is B")
