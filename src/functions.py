@@ -4,6 +4,8 @@ import numpy
 from sklearn.cluster import KMeans
 from sklearn.linear_model import LogisticRegression
 
+from Linker import linker
+
 
 def average(X_train, X_test, y_train, y_test):
     X_train_Average = X_train
@@ -11,7 +13,7 @@ def average(X_train, X_test, y_train, y_test):
     y_train_Average = y_train
     y_test_Average = y_test
     print("I am learning...")
-    average = sum(y_train_Average) / len(y_train_Average)
+    average = linker.list_average(y_train_Average)
     y_test_new = [round(average, 2) for x in y_test_Average]
     return y_test_new
 
