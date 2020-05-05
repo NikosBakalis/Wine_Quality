@@ -30,22 +30,30 @@ while question != "Leave":
         print("Now choose the file to SVM.")
         print("Possible files.")
         file = input("winequality-red, winequality-red-Average, "
-                     "winequality-red-Logistic-Regression and winequality-red-K-means:")
+                     "winequality-red-Logistic-Regression and winequality-red-K-means: ")
         if os.path.exists("../Input/" + file + ".csv"):
             if os.stat("../Input/" + file + ".csv").st_size != 0:
+                f1_score_list = []
+                precision_score_list = []
+                recall_score_list = []
                 df = pandas.read_csv("../Input/" + file + ".csv")
-                X_train_A, X_test_A, y_train_A, y_test_A = train_test_split(
-                    df[["fixed acidity", "volatile acidity", "citric acid",
-                        "residual sugar", "chlorides",
-                        "free sulfur dioxide", "total sulfur dioxide", "density", "pH",
-                        "sulphates", "alcohol"]], df.quality, test_size=0.25)
-                clf = SVC(gamma='auto')
-                clf.fit(X_train_A, y_train_A)
-                final = clf.predict(X_test_A)
-                # print(y_test, final)
-                print("f1 Score:\t\t\t", float(f1_score(y_test_A, final, average='micro')))
-                print("Precision Score:\t", float(precision_score(y_test_A, final, average='micro')))
-                print("Recall Score:\t\t", float(recall_score(y_test_A, final, average='micro')), "\n\n")
+                print("This might take a while...")
+                for k in range(50):
+                    X_train_A, X_test_A, y_train_A, y_test_A = train_test_split(
+                        df[["fixed acidity", "volatile acidity", "citric acid",
+                            "residual sugar", "chlorides",
+                            "free sulfur dioxide", "total sulfur dioxide", "density", "pH",
+                            "sulphates", "alcohol"]], df.quality, test_size=0.25)
+                    clf = SVC(gamma='auto')
+                    clf.fit(X_train_A, y_train_A)
+                    final = clf.predict(X_test_A)
+                    # print(y_test, final)
+                    f1_score_list.append(f1_score(y_test_A, final, average='micro'))
+                    precision_score_list.append(precision_score(y_test_A, final, average='micro'))
+                    recall_score_list.append(recall_score(y_test_A, final, average='micro'))
+                print("f1 Score for", k + 1, "times is:\t\t\t", round(float(linker.list_average(f1_score_list)), 3))
+                print("Precision Score for", k + 1, "times is:\t", round(float(linker.list_average(precision_score_list)), 3))
+                print("Recall Score for", k + 1, "times is:\t\t", round(float(linker.list_average(recall_score_list)), 3), "\n\n")
             else:
                 print("This file is empty.")
                 print("Try again with another file or populate this file using B.")
