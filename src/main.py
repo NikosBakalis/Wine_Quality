@@ -1,14 +1,10 @@
 import os.path
-import sys
 
-import numpy
 import pandas
 from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, precision_score, recall_score
-from sklearn.linear_model import LogisticRegression
-from sklearn.cluster import KMeans
-from Linker import linker
+from Linker import linker, functions
 
 linker.csv_clear("../Input/winequality-red-Average.csv")
 linker.csv_clear("../Input/winequality-red-Logistic-Regression.csv")
@@ -73,7 +69,6 @@ while question != "Leave":
         while choice != "Leave":
             choice = input("Choose one between Average, Logistic Regression, K-means or Leave: ")
             # print(X_train, X_test, y_train, y_test)
-            import functions
             if choice == "Average":
                 print("Average")
                 result = functions.average(X_train, X_test, y_train, y_test)
