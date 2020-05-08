@@ -7,16 +7,16 @@ from sklearn.metrics import f1_score, precision_score, recall_score
 from Linker import linker, functions
 
 # Clears the csv when program executes.
-linker.csv_clear("../Input/winequality-red-Average.csv")
-linker.csv_clear("../Input/winequality-red-Logistic-Regression.csv")
-linker.csv_clear("../Input/winequality-red-K-means.csv")
+linker.csv_clear("../Input-Output/winequality-red-Average.csv")
+linker.csv_clear("../Input-Output/winequality-red-Logistic-Regression.csv")
+linker.csv_clear("../Input-Output/winequality-red-K-means.csv")
 
 # Ask user which sub-question he wants to perform.
 question = ""
 while question != "Leave":
     print("What would you like to do?")
     question = input("A, B or Leave: ")
-    df = pandas.read_csv("../Input/winequality-red.csv")
+    df = pandas.read_csv("../Input-Output/winequality-red.csv")
     # Splitting the dataframe.
     X_train_A, X_test_A, y_train_A, y_test_A = train_test_split(
         df[["fixed acidity", "volatile acidity", "citric acid",
@@ -30,12 +30,12 @@ while question != "Leave":
         print("Possible files.")
         file = input("winequality-red, winequality-red-Average, "
                      "winequality-red-Logistic-Regression and winequality-red-K-means: ")
-        if os.path.exists("../Input/" + file + ".csv"): # If path exists.
-            if os.stat("../Input/" + file + ".csv").st_size != 0:   # If file in not empty.
+        if os.path.exists("../Input-Output/" + file + ".csv"): # If path exists.
+            if os.stat("../Input-Output/" + file + ".csv").st_size != 0:   # If file in not empty.
                 f1_score_list = []
                 precision_score_list = []
                 recall_score_list = []
-                df = pandas.read_csv("../Input/" + file + ".csv")
+                df = pandas.read_csv("../Input-Output/" + file + ".csv")
                 print("This might take a while...")
                 for k in range(50): # For usage for better results.
                     X_train_A, X_test_A, y_train_A, y_test_A = train_test_split(
@@ -85,7 +85,7 @@ while question != "Leave":
                 results = X_train.append(X_test, sort=False)
                 results = results.append(X_test_B, sort=False)
                 print(results)
-                results.to_csv("../Input/winequality-red-Average.csv", index=False)
+                results.to_csv("../Input-Output/winequality-red-Average.csv", index=False)
                 # Dataframe management.
                 X_train.drop(["pH"], axis=1, inplace=True)
                 X_test.drop(["pH"], axis=1, inplace=True)
@@ -104,7 +104,7 @@ while question != "Leave":
                 results = X_train.append(X_test, sort=False)
                 results = results.append(X_test_B, sort=False)
                 print(results)
-                results.to_csv("../Input/winequality-red-Logistic-Regression.csv", index=False)
+                results.to_csv("../Input-Output/winequality-red-Logistic-Regression.csv", index=False)
                 # Dataframe management.
                 X_train.drop(["pH"], axis=1, inplace=True)
                 X_test.drop(["pH"], axis=1, inplace=True)
@@ -123,7 +123,7 @@ while question != "Leave":
                 results = X_train.append(X_test, sort=False)
                 results = results.append(X_test_B, sort=False)
                 print(results)
-                results.to_csv("../Input/winequality-red-K-means.csv", index=False)
+                results.to_csv("../Input-Output/winequality-red-K-means.csv", index=False)
                 # Dataframe management.
                 X_train.drop(["pH"], axis=1, inplace=True)
                 X_test.drop(["pH"], axis=1, inplace=True)
