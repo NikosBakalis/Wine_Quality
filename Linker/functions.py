@@ -1,3 +1,4 @@
+# This file contains the tree functions we will use to populate our dataframe.
 import sys
 
 import numpy
@@ -7,9 +8,15 @@ from sklearn.linear_model import LogisticRegression
 from Linker import linker
 
 
-def average(X_train, X_test, y_train, y_test):
-    X_train_Average = X_train
-    X_test_Average = X_test
+def average(y_train, y_test):
+    """
+    This function will return the average number of y_train dataframe as dataframe.
+    :param y_train: Dataframe of all the numbers I want to find the average.
+    :param y_test: Dataframe before returning.
+    :return: Dataframe populated with one number. The average of y_train list.
+    """
+    # X_train_Average = X_train
+    # X_test_Average = X_test
     y_train_Average = y_train
     y_test_Average = y_test
     print("I am learning...")
@@ -18,11 +25,18 @@ def average(X_train, X_test, y_train, y_test):
     return y_test_new
 
 
-def logistic_regression(X_train, X_test, y_train, y_test):
+def logistic_regression(X_train, X_test, y_train):
+    """
+    This function performs the logistic regression model to X_train and y_train dataframes and returns it as a dataframe.
+    :param X_train: Dataframe to be trained.
+    :param X_test: Dataframe to get the length of return dataframe.
+    :param y_train: Dataframe to be trained.
+    :return: Dataframe populated with results of X_train and y_train.
+    """
     X_train_Logistic_Regression = X_train
     X_test_Logistic_Regression = X_test
     y_train_Logistic_Regression = y_train
-    y_test_Logistic_Regression = y_test
+    # y_test_Logistic_Regression = y_test
     y_train_encoded = [x * 100 for x in y_train_Logistic_Regression]
     model = LogisticRegression(max_iter=10000)
     print("I am learning...")
@@ -33,6 +47,14 @@ def logistic_regression(X_train, X_test, y_train, y_test):
 
 
 def k_means(X_train, X_test, y_train, y_test):
+    """
+    This function performs the k-means model to X_train and y_train dataframes and returns it as a dataframe.
+    :param X_train: Dataframe to be trained.
+    :param X_test: Dataframe to be tested.
+    :param y_train: Dataframe to be added to X_train.
+    :param y_test: Dataframe to be added y_train.
+    :return: Dataframe populated with results of X_train and y_train.
+    """
     X_train_K_means = X_train
     X_test_K_means = X_test
     y_train_K_means = y_train
