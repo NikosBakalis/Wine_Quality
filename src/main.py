@@ -74,7 +74,7 @@ while question != "Leave":
             # print(X_train, X_test, y_train, y_test)
             if choice == "Average":
                 print("Average")
-                result = functions.average(X_train, X_test, y_train, y_test)
+                result = functions.average(y_train, y_test)
                 X_train.insert(8, "pH", y_train, True)
                 X_test.insert(8, "pH", result, True)
                 X_test_B = X_test_A
