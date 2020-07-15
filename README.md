@@ -14,5 +14,10 @@ and we are going to mesure the outcome of the model using f1 score, precision an
 
 ### Second step
 ```
-
+The second part of the code will first remove the 33% of the items in the pH column.
+After that, we have 4 different methods to handle the empty fields:
+1. Empty the whole column.
+2. Fill the columnt with the average of the remaining items.
+3. Fill the column using Logistic-Regression.
+4. Fill the column using K-means.
 ```
